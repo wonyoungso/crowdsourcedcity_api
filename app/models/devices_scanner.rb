@@ -1,0 +1,2 @@
+class DevicesScanner < ApplicationRecord
+end

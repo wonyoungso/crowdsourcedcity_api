@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device_id: 1
+  scanner_id: 1
+  timestamp: 2019-04-11 10:04:13
+  signal_strength: 1.5
+
+two:
+  device_id: 1
+  scanner_id: 1
+  timestamp: 2019-04-11 10:04:13
+  signal_strength: 1.5
