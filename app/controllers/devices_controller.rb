@@ -3,7 +3,7 @@ class DevicesController < ApplicationController
     puts params
     render json: {
       "message": "posted data",
-      "success": true
+      "success": true,
       "params": params
     }
   end
