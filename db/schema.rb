@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_135824) do
+ActiveRecord::Schema.define(version: 2019_04_11_140413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 2019_04_11_135824) do
   create_table "devices", force: :cascade do |t|
     t.text "name"
     t.text "device_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "devices_scanners", force: :cascade do |t|
+    t.integer "device_id"
+    t.integer "scanner_id"
+    t.datetime "timestamp"
+    t.float "signal_strength"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

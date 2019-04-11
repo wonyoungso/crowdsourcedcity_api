@@ -1,0 +1,1 @@
+heroku config:set DATABASE_URL=postgres://sclspatial:senseable10400@sclspatial-02.cccgllkjaf7f.us-east-1.rds.amazonaws.com:5432
