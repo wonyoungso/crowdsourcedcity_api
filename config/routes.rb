@@ -4,6 +4,5 @@ Rails.application.routes.draw do
 
   post '/data', to: 'devices#create'
   post '/passive', to: 'devices#create'
-  get '/passive', to: 'devices#create'
 
 end
