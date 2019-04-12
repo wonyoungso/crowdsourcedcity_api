@@ -8,8 +8,7 @@ class ScannersController < ApplicationController
 
     render json: {
       "message": "posted data",
-      "success": true,
-      "params": params
+      "success": true
     }
   end
 end

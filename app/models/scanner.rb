@@ -5,29 +5,59 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
   validates :device_id, :presence => true, :uniqueness => true
 
   def self.parse_data(device_data)
+  #   {  
+  #     "d":"DEVICE",
+  #     "f":"FAMILY",
+  #     "t":1520424248897,
+  #     "l":"LOCATION",
+  #     "s":{  
+  #        "bluetooth":{  
+  #           "20:25:64:b7:91:42":-72,
+  #           "20:25:64:b8:06:38":-81,    
+  #        },
+  #        "wifi":{  
+  #           "20:25:64:b7:91:40":-73,
+  #           "70:4d:7b:11:3a:c8":-81,
+  #           "88:d7:f6:a7:2a:4c":-39,
+  #           "8c:0f:6f:e7:2b:78":-42,
+  #           "8c:0f:6f:e7:2b:80":-43,
+  #           "92:0f:6f:e7:2b:80":-43,
+  #           "96:0f:6f:e7:2b:78":-39,
+  #           "9e:0f:6f:e7:2b:80":-43,
+  #           "ac:9e:17:7f:38:a4":-55,
+  #           "dc:fe:07:79:aa:c0":-90,
+  #           "dc:fe:07:79:aa:c3":-89
+  #        }
+  #     },
+  #     "gps":{
+  #         "lat":12.1,
+  #         "lon":10.1,
+  #         "alt":54
+  #     }
+  #  }
     device_data = {  
-      "d":"DEVICE",
+      "d":"DEVICE_2",
       "f":"FAMILY",
       "t":1520424248897,
       "l":"LOCATION",
       "s":{  
-          "bluetooth":{  
-            "20:25:64:b7:91:42":-72,
-            "20:25:64:b8:06:38":-81,    
-          },
-          "wifi":{  
-            "20:25:64:b7:91:40":-73,
-            "70:4d:7b:11:3a:c8":-81,
-            "88:d7:f6:a7:2a:4c":-39,
-            "8c:0f:6f:e7:2b:78":-42,
-            "8c:0f:6f:e7:2b:80":-43,
-            "92:0f:6f:e7:2b:80":-43,
-            "96:0f:6f:e7:2b:78":-39,
-            "9e:0f:6f:e7:2b:80":-43,
-            "ac:9e:17:7f:38:a4":-55,
-            "dc:fe:07:79:aa:c0":-90,
-            "dc:fe:07:79:aa:c3":-89
-          }
+        "bluetooth":{  
+            "20:25:64:b7:91:42":-42,
+            "20:25:64:b8:06:38":-52,    
+        },
+        "wifi":{  
+            "20:25:64:b7:91:40":-12,
+            "70:4d:7b:11:3a:c8":-55,
+            "88:d7:f6:a7:2a:4c":-23,
+            "8c:0f:6f:e7:2b:78":-65,
+            "8c:0f:6f:e7:2b:80":-64,
+            "92:0f:6f:e7:2b:80":-32,
+            "96:0f:6f:e7:2b:78":-12,
+            "9e:0f:6f:e7:2b:80":-85,
+            "ac:9e:17:7f:38:a4":-58,
+            "dc:fe:07:79:aa:c0":-12,
+            "dc:fe:07:79:aa:c3":-55
+        }
       },
       "gps":{
           "lat":12.1,
@@ -35,7 +65,6 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
           "alt":54
       }
     }
-
     scanner = Scanner.find_or_create_by(device_id: device_data[:d])
     scanner_id = scanner.id
         
