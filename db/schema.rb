@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_12_181311) do
+ActiveRecord::Schema.define(version: 2019_04_12_183518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2019_04_12_181311) do
     t.float "signal_strength"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "timestamp_integer"
     t.index ["device_id"], name: "index_devices_scanners_on_device_id"
     t.index ["scanner_id"], name: "index_devices_scanners_on_scanner_id"
   end

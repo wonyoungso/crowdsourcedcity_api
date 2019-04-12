@@ -36,18 +36,27 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
       }
     }
 
-    scanner = Scanner.where(device_id: device_data["d"]).first
-    unless scanner.present?
-      scanner = Scanner.new
-      scanner.device_id = device_data["d"]
-      scanner.save
-    end
-
+    scanner = Scanner.find_or_create_by(device_id: device_data[:d])
+    scanner_id = scanner.id
+        
     # puts device_data
     device_data[:s].each do |k, v|
       v.each do |mac_address, strength|
-        device = Device.where(mac_address: )
-        puts "type: #{k} #{mac_address}: #{strength}"
+        device = Device.find_or_create_by(mac_address: mac_address, device_type: k)
+        device_id = device.id
+        time_integer = device_data[:t]
+        # strength = strength
+        timestamp = Time.at(time_integer / 1000).to_datetime
+        puts "scanner_id: #{scanner_id} device_id: #{device_id} time_integer: #{device_data[:t]} timestamp: #{timestamp} strength: #{strength}"
+
+        devices_scanner = DevicesScanner.new
+        devices_scanner.device_id = device_id
+        devices_scanner.scanner_id = scanner_id
+        devices_scanner.timestamp = timestamp
+        devices_scanner.timestamp_integer = time_integer
+        devices_scanner.signal_strength = strength
+        devices_scanner.save 
+
       end
 
     end
