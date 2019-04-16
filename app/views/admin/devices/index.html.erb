@@ -1,0 +1,48 @@
+<div class="l-apple-box"></div>
+
+<h3> 
+  All Devices
+</h3>
+
+<div class="l-apple-box"></div>
+<table class="table table-striped">
+  <tr>
+    <th>
+      #
+    </th>
+    <th>
+      Type
+    </th>
+    <th>
+      Mac Address
+    </th>
+    <th>
+      Show
+    </th>
+    <th>
+      Delete
+    </th>
+  </tr>
+  <% @devices.each do |d| %> 
+    <tr>
+      <td>
+        <%= d.id %>
+      </td>
+
+      <td>
+        <%= d.device_type %>
+      </td>
+      <td>
+        <%= d.mac_address %>
+      </td>
+      <td>
+        <%= link_to "Show", admin_device_path(d) %>
+      </td>
+      <td>
+        <%= link_to "Delete", admin_device_path(d), :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @devices, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer  %>

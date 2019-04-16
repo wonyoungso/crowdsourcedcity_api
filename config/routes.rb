@@ -5,4 +5,15 @@ Rails.application.routes.draw do
   post '/data', to: 'scanners#create'
   post '/passive', to: 'scanners#create'
 
+  namespace :admin do
+    resources :users
+    resources :scanners
+    resources :devices
+
+    match 'login' => 'sessions#new', :via => :get
+    match 'login' => 'sessions#create', :via => :post
+    match 'logout' => 'sessions#destroy', :via => :delete
+    
+    root :to => 'users#index'
+  end
 end

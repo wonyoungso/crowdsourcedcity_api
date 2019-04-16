@@ -1,0 +1,52 @@
+
+<div class="l-apple-box"></div>
+
+<h3> 
+  All Scanners
+</h3>
+
+<div class="l-apple-box"></div>
+<table class="table table-striped">
+  <tr>
+    <th>
+      #
+    </th>
+    <th>
+      Scanner Name
+    </th>
+    <th>
+      Location
+    </th>
+    <th>
+      Edit
+    </th>
+    <th>
+      Delete
+    </th>
+  </tr>
+  <% @scanners.each do |s| %> 
+    <tr>
+      <td>
+        <%= s.id %>
+      </td>
+
+      <td>
+        <%= s.device_id %>
+      </td>
+
+      <td>
+        [<%= s.pos_x %>, <%= s.pos_y %>]
+      </td>
+      
+      <td>
+        <%= link_to  "Edit", edit_admin_scanner_path(s) %>
+      </td>
+
+      <td>
+        <%= link_to  "Delete", admin_scanner_path(s), method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @scanners, :renderer => WillPaginate::ActionView::Bootstrap4LinkRenderer  %>

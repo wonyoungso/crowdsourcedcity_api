@@ -1,72 +1,48 @@
+require 'matrix'
+
 class Scanner < ApplicationRecord # scanner: Raspberry Pi
-  has_many :devices_scanners
+  has_many :devices_scanners, dependent: :destroy
   has_many :devices, :through => :devices_scanners
 
   validates :device_id, :presence => true, :uniqueness => true
 
+  A = 28.0    #45-49 Recommended
+  N = 3.0   #3.25-4.5 Recommended
+  
   def self.parse_data(device_data)
-  #   {  
-  #     "d":"DEVICE",
-  #     "f":"FAMILY",
-  #     "t":1520424248897,
-  #     "l":"LOCATION",
-  #     "s":{  
-  #        "bluetooth":{  
-  #           "20:25:64:b7:91:42":-72,
-  #           "20:25:64:b8:06:38":-81,    
-  #        },
-  #        "wifi":{  
-  #           "20:25:64:b7:91:40":-73,
-  #           "70:4d:7b:11:3a:c8":-81,
-  #           "88:d7:f6:a7:2a:4c":-39,
-  #           "8c:0f:6f:e7:2b:78":-42,
-  #           "8c:0f:6f:e7:2b:80":-43,
-  #           "92:0f:6f:e7:2b:80":-43,
-  #           "96:0f:6f:e7:2b:78":-39,
-  #           "9e:0f:6f:e7:2b:80":-43,
-  #           "ac:9e:17:7f:38:a4":-55,
-  #           "dc:fe:07:79:aa:c0":-90,
-  #           "dc:fe:07:79:aa:c3":-89
-  #        }
-  #     },
-  #     "gps":{
-  #         "lat":12.1,
-  #         "lon":10.1,
-  #         "alt":54
-  #     }
-  #  }
     device_data = {  
-      "d":"DEVICE_2",
-      "f":"FAMILY",
-      "t":1520424248897,
-      "l":"LOCATION",
-      "s":{  
-        "bluetooth":{  
-            "20:25:64:b7:91:42":-42,
-            "20:25:64:b8:06:38":-52,    
+        "d":"DEVICE_1",
+        "f":"FAMILY",
+        "t":1520424248897,
+        "l":"LOCATION",
+        "s":{  
+            "bluetooth":{  
+              "20:25:64:b7:91:42":-23,
+              "20:25:64:b8:06:38":-44,    
+            },
+            "wifi":{  
+              "20:25:64:b7:91:40":-22,
+              "70:4d:7b:11:3a:c8":-52,
+              "88:d7:f6:a7:2a:4c":-43,
+              "8c:0f:6f:e7:2b:78":-32,
+              "8c:0f:6f:e7:2b:80":-65,
+              "92:0f:6f:e7:2b:80":-75,
+              "96:0f:6f:e7:2b:78":-98,
+              "9e:0f:6f:e7:2b:80":-23,
+              "ac:9e:17:7f:38:a4":-11,
+              "dc:fe:07:79:aa:c0":-22,
+              "dc:fe:07:79:aa:c3":-23
+            }
         },
-        "wifi":{  
-            "20:25:64:b7:91:40":-12,
-            "70:4d:7b:11:3a:c8":-55,
-            "88:d7:f6:a7:2a:4c":-23,
-            "8c:0f:6f:e7:2b:78":-65,
-            "8c:0f:6f:e7:2b:80":-64,
-            "92:0f:6f:e7:2b:80":-32,
-            "96:0f:6f:e7:2b:78":-12,
-            "9e:0f:6f:e7:2b:80":-85,
-            "ac:9e:17:7f:38:a4":-58,
-            "dc:fe:07:79:aa:c0":-12,
-            "dc:fe:07:79:aa:c3":-55
+        "gps":{
+            "lat":12.1,
+            "lon":10.1,
+            "alt":54
         }
-      },
-      "gps":{
-          "lat":12.1,
-          "lon":10.1,
-          "alt":54
       }
-    }
     scanner = Scanner.find_or_create_by(device_id: device_data[:d])
     scanner_id = scanner.id
+
         
     # puts device_data
     device_data[:s].each do |k, v|
@@ -86,10 +62,56 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
         devices_scanner.signal_strength = strength
         devices_scanner.save 
 
+        d = DevicesScanner.first
+        t1 = d.timestamp - 45.seconds
+        t2 = d.timestamp + 45.seconds
+        r = DevicesScanner.where(device_id: d.device_id, timestamp: t1..t2).count
+
       end
 
     end
 
+  end
+
+  def self.calculate_distance(rssi)
+
+    mi = (rssi.abs - A)/(10 * N)
+    return 10.0 ** mi.to_f
+
+  end
+
+  def self.calculate_coordinate(rssiList)
+    # rssiList = [-52, -46, -48]
+    # {'a': -52, 'b': -48, 'c': -46}
+    # sensorPositions={"a":[2,3.29],"c":[6.35,2.1],"b":[6.35,9.5]}
+
+    sensor_list = Scanner.order('id ASC').map {|s| [s.pos_x, s.pos_y]}
+    sensorX = sensor_list.map {|s| s[0] }
+    sensorY = sensor_list.map {|s| s[1] }
+    distance = []
+
+    rssiList.each do |rssi|
+      distance << calculate_distance(rssi)
+    end
+
+    matrixA = Matrix[[0, 0]]
+    matrixB = Matrix[[0]]
+    lx = distance.length
+    (0..distance.length - 2).each do |i|
+      objA=[2*(sensorX[i]-sensorX[lx-1]),2 * (sensorY[i] - sensorY[lx - 1])]
+      objB=[sensorX[i]*sensorX[i]-sensorX[lx - 1]*sensorX[lx - 1] + sensorY[i] * sensorY[i] - sensorY[lx - 1] * sensorY[lx - 1] + distance[lx - 1] * distance[lx - 1] - distance[i]*distance[i]]
+      if i == 0 
+        matrixA = Matrix[objA]
+        matrixB = Matrix[objB]
+      else
+        matrixA = Matrix.vstack(matrixA, Matrix[objA])
+        matrixB = Matrix.vstack(matrixB, Matrix[objB])
+      end
+      
+    end
+
+    answer = (matrixA.transpose * matrixA).inverse * matrixA.transpose * matrixB
+    return answer.to_a.flatten
   end
   
 end

@@ -1,0 +1,50 @@
+<h3>
+  Show <%= @device.mac_address %>
+</h3>
+<div class="row">
+  <div class="col-md-8">
+    Showup time: <%= @device.showup_time %>
+
+    <div class="l-apple-box"></div>
+
+    <h3>
+      Logs
+    </h3>
+    <table class="table table-striped">
+      <tr>
+        <th>
+          #
+        </th>
+
+        <th>
+          Scanner
+        </th>
+        <th>
+          Timestamp
+        </th>
+        <th>
+          Strength
+        </th>
+      </tr>
+      <% @device.devices_scanners.order("timestamp DESC").each do |ds| %> 
+        <tr>
+          <td>
+            <%= ds.id %>
+          </td>
+          <td>
+            <%= ds.scanner.device_id %>
+          </td>
+          <td>
+            <%= ds.timestamp.strftime("%Y-%m-%d %H:%M:%S") %>
+          </td>
+          <td>
+            <%= ds.signal_strength %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  </div>
+  <div class="col-md-3">
+  </div>
+</div

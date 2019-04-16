@@ -1,0 +1,28 @@
+ <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <%= link_to 'Crowd Sourced City API', admin_root_path, class: 'navbar-brand' %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item <%= 'active' if params[:controller] == 'admin/users'  %>" >
+          <%= link_to "Admin(#{User.count})", admin_users_path %>
+        </li>
+         <li class="nav-item <%= 'active' if params[:controller] == 'admin/scanners'  %>" >
+          <%= link_to "Scanners(#{Scanner.count})", admin_scanners_path %>
+        </li>
+
+         <li class="nav-item <%= 'active' if params[:controller] == 'admin/devices'  %>" >
+          <%= link_to "Devices", admin_devices_path %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%= link_to 'Sign out', admin_logout_path, method: :delete %>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
