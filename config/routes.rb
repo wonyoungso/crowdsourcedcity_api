@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :users
     resources :scanners
     resources :devices
+    resources :devices_scanners
 
     match 'login' => 'sessions#new', :via => :get
     match 'login' => 'sessions#create', :via => :post

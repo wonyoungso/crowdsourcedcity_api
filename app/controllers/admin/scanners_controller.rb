@@ -1,7 +1,7 @@
 class Admin::ScannersController < Admin::AdminController
   def index
     @page = params[:page] || 1
-    @scanners = Scanner.order('created_at DESC').paginate(per_page: 30, page: @page)
+    @scanners = Scanner.order('device_id ASC').paginate(per_page: 30, page: @page)
   end
 
   def edit

@@ -10,36 +10,36 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
   N = 3.0   #3.25-4.5 Recommended
   
   def self.parse_data(device_data)
-    device_data = {  
-        "d":"DEVICE_1",
-        "f":"FAMILY",
-        "t":1520424248897,
-        "l":"LOCATION",
-        "s":{  
-            "bluetooth":{  
-              "20:25:64:b7:91:42":-23,
-              "20:25:64:b8:06:38":-44,    
-            },
-            "wifi":{  
-              "20:25:64:b7:91:40":-22,
-              "70:4d:7b:11:3a:c8":-52,
-              "88:d7:f6:a7:2a:4c":-43,
-              "8c:0f:6f:e7:2b:78":-32,
-              "8c:0f:6f:e7:2b:80":-65,
-              "92:0f:6f:e7:2b:80":-75,
-              "96:0f:6f:e7:2b:78":-98,
-              "9e:0f:6f:e7:2b:80":-23,
-              "ac:9e:17:7f:38:a4":-11,
-              "dc:fe:07:79:aa:c0":-22,
-              "dc:fe:07:79:aa:c3":-23
-            }
-        },
-        "gps":{
-            "lat":12.1,
-            "lon":10.1,
-            "alt":54
-        }
-      }
+    # device_data = {  
+    #     "d":"DEVICE_1",
+    #     "f":"FAMILY",
+    #     "t":1520424248897,
+    #     "l":"LOCATION",
+    #     "s":{  
+    #         "bluetooth":{  
+    #           "20:25:64:b7:91:42":-23,
+    #           "20:25:64:b8:06:38":-44,    
+    #         },
+    #         "wifi":{  
+    #           "20:25:64:b7:91:40":-22,
+    #           "70:4d:7b:11:3a:c8":-52,
+    #           "88:d7:f6:a7:2a:4c":-43,
+    #           "8c:0f:6f:e7:2b:78":-32,
+    #           "8c:0f:6f:e7:2b:80":-65,
+    #           "92:0f:6f:e7:2b:80":-75,
+    #           "96:0f:6f:e7:2b:78":-98,
+    #           "9e:0f:6f:e7:2b:80":-23,
+    #           "ac:9e:17:7f:38:a4":-11,
+    #           "dc:fe:07:79:aa:c0":-22,
+    #           "dc:fe:07:79:aa:c3":-23
+    #         }
+    #     },
+    #     "gps":{
+    #         "lat":12.1,
+    #         "lon":10.1,
+    #         "alt":54
+    #     }
+    #   }
     scanner = Scanner.find_or_create_by(device_id: device_data[:d])
     scanner_id = scanner.id
 
@@ -61,12 +61,6 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
         devices_scanner.timestamp_integer = time_integer
         devices_scanner.signal_strength = strength
         devices_scanner.save 
-
-        d = DevicesScanner.first
-        t1 = d.timestamp - 45.seconds
-        t2 = d.timestamp + 45.seconds
-        r = DevicesScanner.where(device_id: d.device_id, timestamp: t1..t2).count
-
       end
 
     end
@@ -80,14 +74,11 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   end
 
-  def self.calculate_coordinate(rssiList)
+  def self.calculate_coordinate(sensorX, sensorY, rssiList)
     # rssiList = [-52, -46, -48]
     # {'a': -52, 'b': -48, 'c': -46}
     # sensorPositions={"a":[2,3.29],"c":[6.35,2.1],"b":[6.35,9.5]}
 
-    sensor_list = Scanner.order('id ASC').map {|s| [s.pos_x, s.pos_y]}
-    sensorX = sensor_list.map {|s| s[0] }
-    sensorY = sensor_list.map {|s| s[1] }
     distance = []
 
     rssiList.each do |rssi|

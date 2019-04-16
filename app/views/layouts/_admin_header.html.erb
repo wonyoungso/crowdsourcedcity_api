@@ -17,6 +17,10 @@
          <li class="nav-item <%= 'active' if params[:controller] == 'admin/devices'  %>" >
           <%= link_to "Devices", admin_devices_path %>
         </li>
+
+         <li class="nav-item <%= 'active' if params[:controller] == 'admin/devices'  %>" >
+          <%= link_to "Position", admin_devices_scanners_path %>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>

@@ -17,13 +17,14 @@ class DevicesScanner < ApplicationRecord
       devices: []
     }
 
-    devices_scanners.each do |devices_scanner|
+    devices_scanners.order("timestamp DESC, device_id DESC").each do |devices_scanner|
 
       device = devices_scanner.device
       device_data = result[:devices].find {|d| d[:mac_address] == device.mac_address }
 
       unless device_data.present?
         device_data = {
+          id: device.id,
           mac_address: device.mac_address,
           signal_strengths: []
         }
@@ -38,6 +39,7 @@ class DevicesScanner < ApplicationRecord
       unless signal_strength.present? 
         device_data[:signal_strengths] << {
           scanner_id: devices_scanner.scanner_id,
+          scanner_name: devices_scanner.scanner.device_id,
           timestamp: devices_scanner.timestamp_integer,
           strength: devices_scanner.signal_strength
         }
@@ -49,8 +51,22 @@ class DevicesScanner < ApplicationRecord
       end
 
     end
+  
+    sensor_list = Scanner.order('device_id ASC').map {|s| [s.pos_x, s.pos_y]}
+    sensorX = sensor_list.map {|s| s[0] }
+    sensorY = sensor_list.map {|s| s[1] }
+
+    result[:devices] = result[:devices].filter {|d| d[:signal_strengths].length == 3} 
+    
+    result[:devices].each do |d|
+      d[:signal_strengths] = d[:signal_strengths].sort {|a, b| a[:scanner_name] <=> b[:scanner_name]}
+      
+      rssiList = d[:signal_strengths].map {|d| d[:strength] }
+      d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList)
+    end
 
 
+    
     result
 
   end

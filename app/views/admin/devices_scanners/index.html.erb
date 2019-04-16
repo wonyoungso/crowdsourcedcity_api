@@ -1,0 +1,35 @@
+<div class="l-apple-box"></div>
+
+<h3> 
+  All Devices at <%= Time.at(@timestamp / 1000).utc.to_datetime.strftime("%Y-%m-%d %H:%M:%S") %>
+</h3>
+
+<%= render 'search_box' %>
+<div class="l-apple-box"></div>
+<table class="table table-striped">
+  <tr>
+    <th>
+      Mac Address
+    </th>
+    <th>
+      Signal Strength
+    </th>
+    <th>
+      Coordinates
+    </th>
+  </tr>
+  <% @result[:devices].each do |d| %> 
+    <tr>
+      <td>
+        <%= d[:mac_address] %>
+      </td>
+      <td>
+        <%= d[:signal_strengths].map {|s| "#{s[:scanner_name]}: #{s[:strength]}" }.join(", ") %>
+      </td>
+
+      <td>
+        <%= d[:coordinates] %>
+      </td>
+    </tr>
+  <% end %>
+</table>
