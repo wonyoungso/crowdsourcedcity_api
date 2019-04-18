@@ -4,7 +4,7 @@ class ScannersController < ApplicationController
 
   def create
 
-    Scanners.parse_data(params)
+    Scanner.parse_data(params)
 
     render json: {
       "message": "posted data",
