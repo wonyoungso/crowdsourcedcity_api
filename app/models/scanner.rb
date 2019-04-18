@@ -40,6 +40,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
     #         "alt":54
     #     }
     #   }
+    puts device_data
     scanner = Scanner.find_or_create_by(device_id: device_data[:d])
     scanner_id = scanner.id
 
