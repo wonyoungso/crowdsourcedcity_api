@@ -10,6 +10,8 @@ https://crowdsourcedcity-api.herokuapp.com
 
 https://crowdsourcedcity-api.herokuapp.com/api/scanners.json
 
+
+# Sample Data
 ```json
 {
 	"success": true,
@@ -39,6 +41,7 @@ DATE format could be something like this:
 YYYY-mm-dd HH:MM:SS 
 2019-04-15 12:23:12
 
+# Sample Data
 ```json
 {
 	"success": true,
