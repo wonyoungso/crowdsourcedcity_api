@@ -35,7 +35,7 @@
             <%= ds.scanner.device_id %>
           </td>
           <td>
-            <%= ds.timestamp.strftime("%Y-%m-%d %H:%M:%S") %>
+            <%= ds.timestamp.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
           </td>
           <td>
             <%= ds.signal_strength %>

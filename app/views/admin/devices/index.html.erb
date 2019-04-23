@@ -1,9 +1,13 @@
 <div class="l-apple-box"></div>
 
 <h3> 
-  All Devices
+  All <%= params[:action] == "index" ? "" : params[:action] %> devices
 </h3>
 
+<%= render 'search_box' %>
+
+<div class="l-apple-box"></div>
+<%= render 'tab' %>
 <div class="l-apple-box"></div>
 <table class="table table-striped">
   <tr>
@@ -15,6 +19,12 @@
     </th>
     <th>
       Mac Address
+    </th>
+    <th>
+      Latest Signal
+    </th>
+    <th>
+      Latest Datetime
     </th>
     <th>
       Show
@@ -34,6 +44,13 @@
       </td>
       <td>
         <%= d.mac_address %>
+      </td>
+      <td>
+        <%= d.latest_signal_strength %>
+      </td>
+
+      <td>
+        <%= d.latest_signal_datetime.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
       </td>
       <td>
         <%= link_to "Show", admin_device_path(d) %>

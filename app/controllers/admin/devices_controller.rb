@@ -4,6 +4,27 @@ class Admin::DevicesController < Admin::AdminController
     @devices = Device.order('created_at DESC').paginate(per_page: 30, page: @page)
   end
 
+   def wifi
+    @page = params[:page] || 1
+    @devices = Device.where(device_type: "wifi").order('created_at DESC').paginate(per_page: 30, page: @page)
+    
+    render :template => 'admin/devices/index'
+  end
+
+  def bluetooth
+    @page = params[:page] || 1
+    @devices = Device.where(device_type: "bluetooth").order('created_at DESC').paginate(per_page: 30, page: @page)
+    
+    render :template => 'admin/devices/index'
+  end
+
+  def search
+    @page = params[:page] || 1
+    @devices = Device.where("mac_address LIKE ?", "%#{params[:query]}%").paginate(per_page: 30, page: @page)
+    
+    render :template => 'admin/devices/index'
+  end
+
   def edit
     @device = Device.find params[:id]
   end

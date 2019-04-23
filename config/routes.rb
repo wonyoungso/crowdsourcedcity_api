@@ -4,11 +4,22 @@ Rails.application.routes.draw do
 
   post '/data', to: 'scanners#create'
   post '/passive', to: 'scanners#create'
+  
+  namespace :api do 
+    resources :devices_scanners
+  end
 
   namespace :admin do
     resources :users
     resources :scanners
-    resources :devices
+    resources :devices do
+      collection do 
+        get :wifi
+        get :bluetooth
+        get :search
+      end
+    end
+
     resources :devices_scanners
 
     match 'login' => 'sessions#new', :via => :get

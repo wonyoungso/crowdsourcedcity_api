@@ -1,6 +1,6 @@
 <%= form_tag admin_devices_scanners_path, :method => :get, :class => 'form-inline' do |f| %>
   <div class="form-group">
-    <%= text_field_tag :timestamp, Time.at(@timestamp / 1000).utc.strftime("%Y-%m-%d %H:%M:%S"), :class => 'form-control', :style => 'width: 400px', :placeholder => "Datetime (e.g., 2019-04-16 14:31:33)" %>
+    <%= text_field_tag :timestamp, Time.at(@timestamp / 1000).localtime.strftime("%Y-%m-%d %H:%M:%S"), :class => 'form-control', :style => 'width: 400px', :placeholder => "Datetime (e.g., 2019-04-16 14:31:33)" %>
   </div>
   <%= submit_tag "Search", :class => 'btn btn-primary' %>
 <% end %>

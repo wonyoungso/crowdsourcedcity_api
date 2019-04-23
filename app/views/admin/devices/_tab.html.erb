@@ -1,0 +1,11 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <%= link_to "All", admin_devices_path, class: "nav-link#{params[:action] == "index" ? " active" : ""}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Wifi", wifi_admin_devices_path, class: "nav-link#{params[:action] == "wifi" ? " active" : ""}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Bluetooth", bluetooth_admin_devices_path, class: "nav-link#{params[:action] == "bluetooth" ? " active" : ""}" %>
+  </li>
+</ul>
