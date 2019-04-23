@@ -7,8 +7,8 @@ class Device < ApplicationRecord
   def showup_time
     devices_scanners = self.devices_scanners.order('timestamp ASC')
 
-    start = devices_scanners.first.timestamp.localtime.strftime("%Y-%m-%d %H:%M:%S")
-    ended = devices_scanners.last.timestamp.localtime.strftime("%H:%M:%S")
+    start = devices_scanners.first.timestamp.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S")
+    ended = devices_scanners.last.timestamp.in_time_zone("Eastern Time (US & Canada)").strftime("%H:%M:%S")
       
     "#{start} - #{ended}"
   end
