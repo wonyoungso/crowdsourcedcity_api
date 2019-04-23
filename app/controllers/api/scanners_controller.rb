@@ -1,4 +1,4 @@
-class ScannersController < ApplicatonController
+class Api::ScannersController < ApplicationController
   def index
     
     @scanners = Scanner.order('device_id ASC')
