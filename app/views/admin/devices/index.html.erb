@@ -50,7 +50,7 @@
       </td>
 
       <td>
-        <%= d.latest_signal_datetime.localtime.strftime("%Y-%m-%d %H:%M:%S") %>
+        <%= d.latest_signal_datetime.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") %>
       </td>
       <td>
         <%= link_to "Show", admin_device_path(d) %>
