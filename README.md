@@ -10,7 +10,7 @@ https://crowdsourcedcity-api.herokuapp.com
 
 https://crowdsourcedcity-api.herokuapp.com/api/scanners.json
 
-`
+```json
 {
 	"success": true,
 	"scanners": [{
@@ -27,7 +27,7 @@ https://crowdsourcedcity-api.herokuapp.com/api/scanners.json
 		"coordinates": [12.0, 15.0]
 	}]
 }
-`
+```
 
 2. Get the all devices' location according to certain timestamp
 
@@ -39,7 +39,7 @@ DATE format could be something like this:
 YYYY-mm-dd HH:MM:SS 
 2019-04-15 12:23:12
 
-`
+```json
 {
 	"success": true,
 	"result": {
@@ -267,4 +267,4 @@ YYYY-mm-dd HH:MM:SS
 		}]
 	}
 }
-`
+```
