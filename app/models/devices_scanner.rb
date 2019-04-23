@@ -5,12 +5,8 @@ class DevicesScanner < ApplicationRecord
   validates :device_id, uniqueness: {scope: [:scanner_id, :timestamp_integer] }
 
   
-  def self.find_all_devices_around_time(timestamp)
+  def self.find_all_devices_around_time(devices_scanners, timestamp)
     
-    timestamp_start = timestamp - 40000
-    timestamp_end = timestamp + 40000
-
-    devices_scanners = DevicesScanner.where(timestamp_integer: timestamp_start...timestamp_end)
 
     result = {
       timestamp: timestamp,

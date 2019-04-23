@@ -18,6 +18,13 @@ class Admin::DevicesController < Admin::AdminController
     render :template => 'admin/devices/index'
   end
 
+  def furniture
+    @page = params[:page] || 1
+    @devices = Device.where(device_type: "bluetooth", is_furniture: true).order('created_at DESC').paginate(per_page: 30, page: @page)
+    
+    render :template => 'admin/devices/index'
+  end
+
   def search
     @page = params[:page] || 1
     @devices = Device.where("mac_address LIKE ?", "%#{params[:query]}%").paginate(per_page: 30, page: @page)

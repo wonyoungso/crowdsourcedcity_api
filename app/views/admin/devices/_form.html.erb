@@ -1,0 +1,15 @@
+<%= form_for [:admin, @device], :html => {:class => 'form-horizontal'} do |f| %>
+
+  <div class="form-group">
+    <%= f.label :is_furniture, 'Is Furniture?', :class => 'col-md-2 control-label' %>
+    <div class="col-md-5">
+      <%= f.check_box :is_furniture %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+      <%= f.submit 'Save', :class => 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

@@ -70,8 +70,29 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   def self.calculate_distance(rssi)
 
-    mi = (rssi.abs - A)/(10 * N)
-    return 10.0 ** mi.to_f
+    # Yuchen's code
+    # mi = (rssi.abs - A)/(10 * N)
+    # return 10.0 ** mi.to_f
+
+    # Sarah's suggested code
+
+    txPower = -59 #hard coded power value. Usually ranges between -59 to -65
+    
+    if rssi == 0
+      return -1.0
+    end
+
+    ratio = rssi * 1.0 / txPower
+
+    if ratio < 1.0
+    
+      return ratio ** 10
+    
+    else
+    
+      distance =  (0.89976) * (ratio ** 7.7095) + 0.111;   
+      return distance
+    end
 
   end
 

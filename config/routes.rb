@@ -6,7 +6,13 @@ Rails.application.routes.draw do
   post '/passive', to: 'scanners#create'
   
   namespace :api do 
-    resources :devices_scanners
+    resources :devices_scanners do 
+      collection do
+        get :wifi
+        get :furniture
+      end
+    end
+
   end
 
   namespace :admin do
@@ -16,6 +22,7 @@ Rails.application.routes.draw do
       collection do 
         get :wifi
         get :bluetooth
+        get :furniture
         get :search
       end
     end

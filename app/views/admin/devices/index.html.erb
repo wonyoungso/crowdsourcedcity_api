@@ -27,7 +27,13 @@
       Latest Datetime
     </th>
     <th>
+      Furniture
+    </th>
+    <th>
       Show
+    </th>
+    <th>
+      Edit
     </th>
     <th>
       Delete
@@ -52,8 +58,16 @@
       <td>
         <%= d.latest_signal_datetime.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") %>
       </td>
+
+      <td>
+        <%= d.is_furniture ? "v" : "" %>
+      </td>
       <td>
         <%= link_to "Show", admin_device_path(d) %>
+      </td>
+
+      <td>
+        <%= link_to "Edit", edit_admin_device_path(d) %>
       </td>
       <td>
         <%= link_to "Delete", admin_device_path(d), :method => :delete %>
