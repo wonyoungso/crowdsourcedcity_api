@@ -8,6 +8,16 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   A = 28.0    #45-49 Recommended
   N = 3.0   #3.25-4.5 Recommended
+
+  def conv_to_json
+    {
+      id: self.id,
+      name: self.name,
+      device_name: self.device_name,
+      coordinates: [self.pos_x, self.pos_y]
+    }
+  end
+
   
   def self.parse_data(device_data)
     # device_data = {  
