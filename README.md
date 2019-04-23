@@ -6,12 +6,12 @@ https://crowdsourcedcity-api.herokuapp.com
 ## API 
 
 
-1. Get the scanners' information
+# Get the scanners' information
 
 https://crowdsourcedcity-api.herokuapp.com/api/scanners.json
 
 
-# Sample Data
+Sample Data
 ```json
 {
 	"success": true,
@@ -31,17 +31,17 @@ https://crowdsourcedcity-api.herokuapp.com/api/scanners.json
 }
 ```
 
-2. Get the all devices' location according to certain timestamp
+# Get the all devices' location according to certain timestamp
 
-https://crowdsourcedcity-api.herokuapp.com.api/devices_scanners/wifi.json?timestamp=DATE (all wifi signals)
-https://crowdsourcedcity-api.herokuapp.com.api/devices_scanners/furniture.json?timestamp=DATE (all furniture signals)
+https://crowdsourcedcity-api.herokuapp.com/api/devices_scanners/wifi.json?timestamp=DATE (all wifi signals)
+https://crowdsourcedcity-api.herokuapp.com/api/devices_scanners/furniture.json?timestamp=DATE (all furniture signals)
 
 
 DATE format could be something like this: 
 YYYY-mm-dd HH:MM:SS 
 2019-04-15 12:23:12
 
-# Sample Data
+Sample Data
 ```json
 {
 	"success": true,
