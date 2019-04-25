@@ -9,6 +9,10 @@ class Admin::DevicesScannersController < Admin::AdminController
       @timestamp = DateTime.parse("2019-04-16 14:31:33").to_i * 1000
     end
 
-    @result = DevicesScanner.find_all_devices_around_time(@timestamp)
+    timestamp_start = @timestamp - 40000
+    timestamp_end = @timestamp + 40000
+
+    @result = DevicesScanner.find_all_devices_around_time(DevicesScanner.where(timestamp_integer: timestamp_start...timestamp_end), @timestamp)
+
   end
 end
