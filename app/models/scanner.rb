@@ -78,7 +78,13 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   end
 
-  def self.calculate_distance(rssi)
+  def self.calculate_distance_yuchen(rssi)
+    txPower = -59.0 #hard coded power value. Usually ranges between -59 to -65
+    
+    return 10.0 ** ((txPower - rssi) / 20)
+  end
+
+  def self.calculate_distance(rssi, _txPower)
 
     # Yuchen's code
     # mi = (rssi.abs - A)/(10 * N)
@@ -86,7 +92,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
     # Sarah's suggested code
 
-    txPower = -59 #hard coded power value. Usually ranges between -59 to -65
+    txPower = _txPower.present? ? _txPower : -59 #hard coded power value. Usually ranges between -59 to -65
     
     if rssi == 0
       return -1.0
@@ -106,7 +112,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   end
 
-  def self.calculate_coordinate(sensorX, sensorY, rssiList)
+  def self.calculate_coordinate(sensorX, sensorY, rssiList, device_type)
     # rssiList = [-52, -46, -48]
     # {'a': -52, 'b': -48, 'c': -46}
     # sensorPositions={"a":[2,3.29],"c":[6.35,2.1],"b":[6.35,9.5]}
@@ -114,7 +120,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
     distance = []
 
     rssiList.each do |rssi|
-      distance << calculate_distance(rssi)
+      distance << calculate_distance(rssi, device_type == "bluetooth" ? -56.11538461538461 : -59)
     end
 
     matrixA = Matrix[[0, 0]]

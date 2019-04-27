@@ -21,6 +21,7 @@ class DevicesScanner < ApplicationRecord
       unless device_data.present?
         device_data = {
           id: device.id,
+          device_type: device.device_type,
           mac_address: device.mac_address,
           signal_strengths: []
         }
@@ -58,7 +59,7 @@ class DevicesScanner < ApplicationRecord
       d[:signal_strengths] = d[:signal_strengths].sort {|a, b| a[:scanner_name] <=> b[:scanner_name]}
       
       rssiList = d[:signal_strengths].map {|d| d[:strength] }
-      d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList)
+      d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList, d[:device_type])
     end
 
 
