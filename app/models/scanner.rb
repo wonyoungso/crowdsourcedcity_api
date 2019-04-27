@@ -51,6 +51,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
     #   }
     puts device_data
     scanner = Scanner.find_or_create_by(device_id: device_data[:d])
+    scanner.update_column(:updated_at, DateTime.now)
     scanner_id = scanner.id
 
         
