@@ -18,6 +18,9 @@
       Location
     </th>
     <th>
+      Last update
+    </th>
+    <th>
       Edit
     </th>
     <th>
@@ -37,7 +40,9 @@
       <td>
         [<%= s.pos_x %>, <%= s.pos_y %>]
       </td>
-      
+      <td>
+        <%= s.updated_at.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") %>
+      </td>
       <td>
         <%= link_to  "Edit", edit_admin_scanner_path(s) %>
       </td>

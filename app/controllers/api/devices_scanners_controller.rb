@@ -8,8 +8,8 @@ class Api::DevicesScannersController < ApplicationController
     else
       @timestamp = DateTime.parse("2019-04-16 14:31:33").to_i * 1000
     end
-    timestamp_start = @timestamp - 40000
-    timestamp_end = @timestamp + 40000
+    timestamp_start = @timestamp - 10000
+    timestamp_end = @timestamp + 10000
 
     @result = DevicesScanner.find_all_devices_around_time(DevicesScanner.where(timestamp_integer: timestamp_start...timestamp_end), @timestamp)
 
@@ -27,8 +27,8 @@ class Api::DevicesScannersController < ApplicationController
       @timestamp = DateTime.parse("2019-04-16 14:31:33").to_i * 1000
     end
 
-    timestamp_start = @timestamp - 40000
-    timestamp_end = @timestamp + 40000
+    timestamp_start = @timestamp - 10000
+    timestamp_end = @timestamp + 10000
     @result = DevicesScanner.find_all_devices_around_time(DevicesScanner.joins(:device, :scanner).where('devices.device_type' => "wifi", 'devices.is_furniture' => false, :timestamp_integer => timestamp_start...timestamp_end), @timestamp)
 
     render json: {success: true, result: @result}
