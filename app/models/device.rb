@@ -23,6 +23,6 @@ class Device < ApplicationRecord
   def latest_signal_datetime
     devices_scanner = self.devices_scanners.order('timestamp DESC').first
 
-    devices_scanner.present? ? devices_scanner.timestamp : ""
+    devices_scanner.present? ? devices_scanner.timestamp : nil
   end
 end

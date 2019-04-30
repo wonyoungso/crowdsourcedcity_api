@@ -56,7 +56,11 @@
       </td>
 
       <td>
-        <%= d.latest_signal_datetime.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") %>
+        <% if d.latest_signal_datetime.present? %>
+          <%= d.latest_signal_datetime.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") %>
+        <% else %>
+          N/A
+        <% end %>
       </td>
 
       <td>
