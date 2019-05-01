@@ -4,8 +4,8 @@ class ScannersController < ApplicationController
 
   def create
 
-    Scanner.parse_data(params)
-
+    Scanner.parse_data(params, request.remote_ip)
+    
     render json: {
       "message": "posted data",
       "success": true
