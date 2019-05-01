@@ -12,13 +12,22 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: crowd_sourced_city_api_development
+  database: crowd_sourced_city_api
   pool: 5
-  username: wonyoungso
-  host: localhost
+  username: sclspatial
+  host: sclspatial-02.cccgllkjaf7f.us-east-1.rds.amazonaws.com
   timeout: 5000
-  password: 
+  password: senseable10400
   schema_search_path: public
+  # adapter: postgresql
+  # encoding: unicode
+  # database: crowd_sourced_city_api_development
+  # pool: 5
+  # username: wonyoungso
+  # host: localhost
+  # timeout: 5000
+  # password: 
+  # schema_search_path: public
 
 test:
   adapter: postgresql

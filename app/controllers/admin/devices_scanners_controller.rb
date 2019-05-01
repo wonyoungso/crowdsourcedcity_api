@@ -2,7 +2,7 @@ class Admin::DevicesScannersController < Admin::AdminController
   def index
 
     if params[:timestamp].present?
-      @timestamp = DateTime.parse(params[:timestamp]).to_i * 1000
+      @timestamp = DateTime.parse(params[:timestamp]).in_time_zone("Eastern Time (US & Canada)").to_i * 1000
     elsif DevicesScanner.first.present?
       @timestamp = DevicesScanner.first.timestamp_integer
     else
