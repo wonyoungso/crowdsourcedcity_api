@@ -26,7 +26,7 @@
           Strength
         </th>
       </tr>
-      <% @device.devices_scanners.order("timestamp DESC, id DESC").each do |ds| %> 
+      <% @device.devices_scanners.order("timestamp DESC, id DESC").limit(10).each do |ds| %> 
         <tr>
           <td>
             <%= ds.id %>
