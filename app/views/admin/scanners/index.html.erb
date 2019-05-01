@@ -21,6 +21,9 @@
       Last update
     </th>
     <th>
+      IP
+    </th>
+    <th>
       Edit
     </th>
     <th>
@@ -43,6 +46,9 @@
       <td>
         <%= s.updated_at.in_time_zone("Eastern Time (US & Canada)").strftime("%Y-%m-%d %H:%M:%S") %>
       </td>
+      <th>
+        <%= s.ip_address %>
+      </th>
       <td>
         <%= link_to  "Edit", edit_admin_scanner_path(s) %>
       </td>
