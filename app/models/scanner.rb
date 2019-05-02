@@ -14,7 +14,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
       id: self.id,
       device_name: self.device_id,
       coordinates: [self.pos_x, self.pos_y]
-    }3
+    }
   end
 
   
