@@ -21,7 +21,7 @@ class DevicesScanner < ApplicationRecord
       unless device_data.present?
         device_data = {
           id: device.id,
-          device_type: device.device_type,
+          type: device.device_type,
           mac_address: device.mac_address,
           signal_strengths: []
         }
@@ -66,11 +66,11 @@ class DevicesScanner < ApplicationRecord
         
         rssiList = d[:signal_strengths].map {|d| d[:strength] }
         
-        tx_power = d[:device_type] == "bluetooth" ? -59 : -48
+        tx_power = d[:type] == "bluetooth" ? -59 : -48
         # coordinates = tri.calculate_from_distances(Scanner.calculate_distance(rssiList[0], tx_power), Scanner.calculate_distance(rssiList[1], tx_power), Scanner.calculate_distance(rssiList[2], tx_power))
       
         # d[:coordinates] = coordinates 
-        d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList, d[:device_type])
+        d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList, d[:type])
       end
 
     end

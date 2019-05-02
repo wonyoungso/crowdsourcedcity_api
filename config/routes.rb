@@ -7,13 +7,7 @@ Rails.application.routes.draw do
   
   namespace :api do 
     resources :scanners
-    resources :devices_scanners do 
-      collection do
-        get :wifi
-        get :furniture
-      end
-    end
-
+    resources :devices_scanners
   end
 
   namespace :admin do
