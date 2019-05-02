@@ -14,7 +14,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
       id: self.id,
       device_name: self.device_id,
       coordinates: [self.pos_x, self.pos_y]
-    }
+    }3
   end
 
   
@@ -80,9 +80,8 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
   end
 
   def self.calculate_distance_yuchen(rssi)
-    txPower = -59.0 #hard coded power value. Usually ranges between -59 to -65
-    
-    return 10.0 ** ((txPower - rssi) / 20)
+    mi = (rssi.abs - A)/(10 * N)
+    return 10.0 ** mi.to_f
   end
 
   def self.calculate_distance(rssi, _txPower)
