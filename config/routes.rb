@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   post '/data', to: 'scanners#create'
   post '/passive', to: 'scanners#create'
   
+  get '/check', to: "welcome#check"
+  
   namespace :api do 
     resources :scanners
     resources :devices_scanners
