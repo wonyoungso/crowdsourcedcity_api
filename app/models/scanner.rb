@@ -83,10 +83,10 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
   end
 
   def self.calculate_distance_yuchen(rssi, device_type)
-    A_final = device_type == "wifi" ? A_wifi : A_bluetooth
-    N_final = device_type == "wifi" ? N_wifi : N_bluetooth
+    a_final = device_type == "wifi" ? A_wifi : A_bluetooth
+    n_final = device_type == "wifi" ? N_wifi : N_bluetooth
 
-    mi = (rssi.abs - A_final)/(10 * N_final)
+    mi = (rssi.abs - a_final)/(10 * n_final)
     return 10.0 ** mi.to_f
   end
 
