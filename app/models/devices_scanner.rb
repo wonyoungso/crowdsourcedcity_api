@@ -16,14 +16,13 @@ class DevicesScanner < ApplicationRecord
     devices_scanners.order("timestamp DESC, device_id DESC").each do |devices_scanner|
 
       device = devices_scanner.device
-      device_data = result[:devices].find {|d| d[:mac_address] == device.mac_address }
+      device_data = result[:devices].find {|d| d[:id] == device.id }
 
       unless device_data.present?
         device_data = {
           id: device.id,
           type: device.device_type,
           is_furniture: device.is_furniture,
-          mac_address: device.mac_address,
           signal_strengths: []
         }
 
