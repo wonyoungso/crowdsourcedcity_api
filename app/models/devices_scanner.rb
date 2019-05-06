@@ -53,7 +53,7 @@ class DevicesScanner < ApplicationRecord
     sensorX = sensor_list.map {|s| s[0] }
     sensorY = sensor_list.map {|s| s[1] }
 
-    result[:devices] = result[:devices].filter {|d| d[:signal_strengths].length == 3} 
+    result[:devices] = result[:devices].filter {|d| d[:signal_strengths].length >= 3} 
     
     result[:devices].each do |d|
       d[:signal_strengths] = d[:signal_strengths].sort {|a, b| a[:scanner_name] <=> b[:scanner_name]}
