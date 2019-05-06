@@ -22,7 +22,7 @@ class DevicesScanner < ApplicationRecord
         device_data = {
           id: device.id,
           type: device.device_type,
-          is_furniture: device.is_furniture,
+          mac_address: device.mac_address,
           signal_strengths: []
         }
 
