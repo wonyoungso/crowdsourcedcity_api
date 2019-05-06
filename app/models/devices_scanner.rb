@@ -48,23 +48,20 @@ class DevicesScanner < ApplicationRecord
       end
 
     end
+      
+    sensor_list = Scanner.order('device_id ASC').map {|s| [s.pos_x, s.pos_y]}
+    sensorX = sensor_list.map {|s| s[0] }
+    sensorY = sensor_list.map {|s| s[1] }
+
+    result[:devices] = result[:devices].filter {|d| d[:signal_strengths].length == 3} 
     
-    if Scanner.count == 3 
+    result[:devices].each do |d|
+      d[:signal_strengths] = d[:signal_strengths].sort {|a, b| a[:scanner_name] <=> b[:scanner_name]}
       
-      sensor_list = Scanner.order('device_id ASC').map {|s| [s.pos_x, s.pos_y]}
-      sensorX = sensor_list.map {|s| s[0] }
-      sensorY = sensor_list.map {|s| s[1] }
-
-      result[:devices] = result[:devices].filter {|d| d[:signal_strengths].length == 3} 
-      
-      result[:devices].each do |d|
-        d[:signal_strengths] = d[:signal_strengths].sort {|a, b| a[:scanner_name] <=> b[:scanner_name]}
-        
-        rssiList = d[:signal_strengths].map {|d| d[:strength] }
-        d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList, d[:type])
-      end
-
+      rssiList = d[:signal_strengths].map {|d| d[:strength] }
+      d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList, d[:type])
     end
+
       
     result
 
