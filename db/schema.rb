@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_175904) do
+ActiveRecord::Schema.define(version: 2019_05_05_230149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 2019_05_01_175904) do
     t.bigint "timestamp_integer"
     t.index ["device_id"], name: "index_devices_scanners_on_device_id"
     t.index ["scanner_id"], name: "index_devices_scanners_on_scanner_id"
+  end
+
+  create_table "refvalues", force: :cascade do |t|
+    t.string "day"
+    t.float "a_wifi"
+    t.float "n_wifi"
+    t.float "a_bluetooth"
+    t.float "n_bluetooth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "scanners", force: :cascade do |t|

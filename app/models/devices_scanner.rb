@@ -52,10 +52,6 @@ class DevicesScanner < ApplicationRecord
     if Scanner.count == 3 
       
       sensor_list = Scanner.order('device_id ASC').map {|s| [s.pos_x, s.pos_y]}
-      # ps = Scanner.order('device_id ASC').map {|s| Vector[s.pos_x, s.pos_y, 0] }
-      # tri = Trilateration::Calculate.new(ps[0], ps[1], ps[2])
-      
-
       sensorX = sensor_list.map {|s| s[0] }
       sensorY = sensor_list.map {|s| s[1] }
 
@@ -65,11 +61,6 @@ class DevicesScanner < ApplicationRecord
         d[:signal_strengths] = d[:signal_strengths].sort {|a, b| a[:scanner_name] <=> b[:scanner_name]}
         
         rssiList = d[:signal_strengths].map {|d| d[:strength] }
-        
-        tx_power = d[:type] == "bluetooth" ? -59 : -48
-        # coordinates = tri.calculate_from_distances(Scanner.calculate_distance(rssiList[0], tx_power), Scanner.calculate_distance(rssiList[1], tx_power), Scanner.calculate_distance(rssiList[2], tx_power))
-      
-        # d[:coordinates] = coordinates 
         d[:coordinates] = Scanner.calculate_coordinate(sensorX, sensorY, rssiList, d[:type])
       end
 

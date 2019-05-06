@@ -6,8 +6,11 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   validates :device_id, :presence => true, :uniqueness => true
 
-  A = 28.0    #45-49 Recommended
-  N = 3.0   #3.25-4.5 Recommended
+  A_wifi = 53.8    #45-49 Recommended
+  N_wifi = 2.67   #3.25-4.5 Recommended
+  
+  A_bluetooth = 76.8495
+  N_bluetooth = 1.93
 
   def conv_to_json
     {
@@ -79,8 +82,11 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   end
 
-  def self.calculate_distance_yuchen(rssi)
-    mi = (rssi.abs - A)/(10 * N)
+  def self.calculate_distance_yuchen(rssi, device_type)
+    A_final = device_type == "wifi" ? A_wifi : A_bluetooth
+    N_final = device_type == "wifi" ? N_wifi : N_bluetooth
+
+    mi = (rssi.abs - A_final)/(10 * N_final)
     return 10.0 ** mi.to_f
   end
 
@@ -120,7 +126,7 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
     distance = []
 
     rssiList.each do |rssi|
-      distance << calculate_distance(rssi, device_type == "bluetooth" ? -56.11538461538461 : -59)
+      distance << calculate_distance_yuchen(rssi, device_type)
     end
 
     matrixA = Matrix[[0, 0]]

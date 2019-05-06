@@ -13,6 +13,17 @@ class Device < ApplicationRecord
     "#{start} - #{ended}"
   end
 
+  def average_scanner_strength(scanner_name, from_date, to_date)
+    scanner = Scanner.where(device_id: scanner_name).first
+    
+    begin 
+      self.devices_scanners.where(scanner_id: scanner.id, timestamp: DateTime.parse(from_date).change(:offset => "-0400")..DateTime.parse(to_date).change(:offset => "-0400")).sum(:signal_strength) / self.devices_scanners.where(scanner_id: scanner.id, timestamp: DateTime.parse(from_date).change(:offset => "-0400")..DateTime.parse(to_date).change(:offset => "-0400")).count
+    rescue
+      0
+    end
+  end
+
+
   def latest_signal_strength
     devices_scanner = self.devices_scanners.order('timestamp DESC').first
 
