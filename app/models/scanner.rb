@@ -6,8 +6,8 @@ class Scanner < ApplicationRecord # scanner: Raspberry Pi
 
   validates :device_id, :presence => true, :uniqueness => true
 
-  A_wifi = 53.8    #45-49 Recommended
-  N_wifi = 2.67   #3.25-4.5 Recommended
+  A_wifi = 50.8947    #45-49 Recommended
+  N_wifi = 3.1   #3.25-4.5 Recommended
   
   A_bluetooth = 76.8495
   N_bluetooth = 1.93
