@@ -11,7 +11,7 @@ class Api::DevicesScannersController < ApplicationController
     timestamp_start = @timestamp - 20000
     timestamp_end = @timestamp + 20000
 
-    @result = DevicesScanner.find_all_devices_around_time(DevicesScanner.joins(:device).where('devices.device_type' => "wifi").or(DevicesScanner.joins(:device).where('devices.is_furniture' => false)).where(:timestamp_integer => timestamp_start...timestamp_end), @timestamp)
+    @result = DevicesScanner.find_all_devices_around_time(DevicesScanner.joins(:device).where('devices.device_type' => "wifi").or(DevicesScanner.joins(:device).where('devices.is_furniture' => true)).where(:timestamp_integer => timestamp_start...timestamp_end), @timestamp)
 
     render json: {success: true, result: @result}
   end
