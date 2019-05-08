@@ -33,11 +33,16 @@ class Admin::DevicesController < Admin::AdminController
   end
 
   def edit
+    
     @device = Device.find params[:id]
+    
   end
   
   def show
+    @page = params[:page] || 1
+
     @device = Device.find params[:id]
+    @devices_scanners = @device.devices_scanners.order("timestamp DESC, id DESC").paginate(per_page: 30, page: @page)
   end
 
 
