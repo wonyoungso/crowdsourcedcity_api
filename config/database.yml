@@ -16,7 +16,7 @@ development:
   pool: 5
   username: sclspatial
   host: sclspatial-02.cccgllkjaf7f.us-east-1.rds.amazonaws.com
-  timeout: 5000
+  timeout: 20000
   password: senseable10400
   schema_search_path: public
   # adapter: postgresql
@@ -47,6 +47,6 @@ production:
   pool: 5
   username: sclspatial
   host: sclspatial-02.cccgllkjaf7f.us-east-1.rds.amazonaws.com
-  timeout: 5000
+  timeout: 20000
   password: senseable10400
   schema_search_path: public
