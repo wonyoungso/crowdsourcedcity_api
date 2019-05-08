@@ -1,6 +1,6 @@
 class Api::DevicesScannersController < ApplicationController
   def index
-    render {success: true, result: []}
+    render json: {success: true, result: []}
     # if params[:timestamp].present?
     #   @timestamp = DateTime.parse(params[:timestamp]).change(:offset => "-0400").to_i * 1000
     # elsif DevicesScanner.first.present?
