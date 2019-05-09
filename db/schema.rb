@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_05_230149) do
+ActiveRecord::Schema.define(version: 2019_05_08_225338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2019_05_05_230149) do
     t.text "mac_address"
     t.string "device_type"
     t.boolean "is_furniture", default: false
+    t.index ["device_type"], name: "index_devices_on_device_type"
+    t.index ["mac_address"], name: "index_devices_on_mac_address"
   end
 
   create_table "devices_scanners", force: :cascade do |t|
