@@ -12,11 +12,11 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: crowd_sourced_city_api
-  pool: 10
+  database: crowd_sourced_city_api_0509
+  pool: 5
   username: sclspatial
   host: sclspatial-02.cccgllkjaf7f.us-east-1.rds.amazonaws.com
-  timeout: 20000
+  timeout: 5000
   password: senseable10400
   schema_search_path: public
   # adapter: postgresql
@@ -44,9 +44,9 @@ production:
   adapter: postgresql
   encoding: unicode
   database: crowd_sourced_city_api
-  pool: 10
+  pool: 5
   username: sclspatial
   host: sclspatial-02.cccgllkjaf7f.us-east-1.rds.amazonaws.com
-  timeout: 20000
+  timeout: 5000
   password: senseable10400
   schema_search_path: public

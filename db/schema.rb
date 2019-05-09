@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_08_225338) do
+ActiveRecord::Schema.define(version: 2019_05_09_023025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2019_05_08_225338) do
     t.float "pos_x", default: 0.0
     t.float "pos_y", default: 0.0
     t.string "ip_address"
+    t.index ["device_id"], name: "index_scanners_on_device_id"
   end
 
   create_table "users", force: :cascade do |t|
