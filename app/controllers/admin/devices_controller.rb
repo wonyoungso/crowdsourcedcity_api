@@ -1,33 +1,34 @@
 class Admin::DevicesController < Admin::AdminController
   def index
     @page = params[:page] || 1
-    @devices = Device.order('created_at DESC').paginate(per_page: 30, page: @page)
+    @devices = Device.order('created_at DESC').paginate(per_page: 10, page: @page)
   end
 
    def wifi
     @page = params[:page] || 1
-    @devices = Device.where(device_type: "wifi").order('created_at DESC').paginate(per_page: 30, page: @page)
+    @devices = Device.where(device_type: "wifi").order('created_at DESC').paginate(per_page: 10, page: @page)
     
     render :template => 'admin/devices/index'
   end
 
   def bluetooth
     @page = params[:page] || 1
-    @devices = Device.where(device_type: "bluetooth").order('created_at DESC').paginate(per_page: 30, page: @page)
+    @devices = Device.where(device_type: "bluetooth").order('created_at DESC').paginate(per_page: 10, page: @page)
     
     render :template => 'admin/devices/index'
   end
 
   def furniture
     @page = params[:page] || 1
-    @devices = Device.where(device_type: "bluetooth", is_furniture: true).order('created_at DESC').paginate(per_page: 30, page: @page)
+    @devices = Device.where(device_type: "bluetooth", is_furniture: true).order('created_at DESC').paginate(per_page: 10, page: @page)
     
     render :template => 'admin/devices/index'
   end
 
   def search
     @page = params[:page] || 1
-    @devices = Device.where("mac_address LIKE ?", "%#{params[:query]}%").paginate(per_page: 30, page: @page)
+    @devices = Device.where("mac_address LIKE ?", "%#{params[:query]}%").paginate(per_page: 10, page: @page,
+                           total_entries: 300)
     
     render :template => 'admin/devices/index'
   end
@@ -42,7 +43,8 @@ class Admin::DevicesController < Admin::AdminController
     @page = params[:page] || 1
 
     @device = Device.find params[:id]
-    @devices_scanners = @device.devices_scanners.order("timestamp DESC, id DESC").paginate(per_page: 30, page: @page)
+    @devices_scanners = @device.devices_scanners.order("timestamp DESC, id DESC").paginate(per_page: 10, page: @page,
+                           total_entries: 300)
   end
 
 
